@@ -5,6 +5,8 @@ Regex-ing
 import re
 from typing import List
 import logging
+from os import environ
+import mysql.connnector
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 
@@ -30,6 +32,21 @@ def get_logger() -> logging.Logger:
     logger.addHandler(stream_handler)
 
     return logger
+
+
+def get_db() -> mysql.connnector.connection.MYSQLConnection:
+    """function that returns a connnector to the database"""
+    username = environ.get("PERSONAL_DATA_DB_USERNAME", "root")
+    password = environ.get("PERSONAL_DATA_DB_PASSWORD", "")
+    host = environ.get("PERSONAL_DATA_DB_HOST", "localhost")
+    db_name = environ.get("PERSONAL_DATA_DB_NAME")
+
+    return mysql.connetor.connection.MYSQLConnection(
+            user=username,
+            password=password,
+            host=host,
+            database=db_name
+            )
 
 
 class RedactingFormatter(logging.Formatter):

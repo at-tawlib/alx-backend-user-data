@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Regex-ing
+Peronal Data handling
 """
 import re
 from typing import List
@@ -49,6 +49,26 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
             )
 
 
+def main():
+    """
+    retrieves all rows in the users table and display
+    each row under a filtered format
+    """
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    fields = [i[0] for i in cursor.description]
+
+    logger = get_logger()
+
+    for row in cursor:
+        str_row = ''.join(f'{f}={str(r)}; ' for r, f in zip(row, fields))
+        logger.info(str_row.strip())
+
+    cursor.close()
+    db.close()
+
+
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
         """
@@ -67,3 +87,7 @@ class RedactingFormatter(logging.Formatter):
         record.msg = filter_datum(self.fields, self.REDACTION,
                                   record.getMessage(), self.SEPARATOR)
         return super(RedactingFormatter, self).format(record)
+
+
+if __name__ == "__main__":
+    main()

@@ -45,5 +45,5 @@ class Auth:
         return request.headers.get("Authorization", None)
 
     def current_user(self, request=None) -> TypeVar('User'):
-        """desc"""
+        """current user function to handle user"""
         return None

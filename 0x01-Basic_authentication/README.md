@@ -57,24 +57,24 @@ $ curl "http://0.0.0.0:5000/api/v1/status" -vvv
 < 
 {"status":"OK"}
 * Closing connection 0
-bob@dylan:~$
+~$
 ```
 
 ### 1. Error handler: Unauthorized
 In the first terminal:
 ```
-bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 python3 -m api.v1.app
+~$ API_HOST=0.0.0.0 API_PORT=5000 python3 -m api.v1.app
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 ....
 ```
 In a second terminal:
 ```
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/unauthorized"
+~$ curl "http://0.0.0.0:5000/api/v1/unauthorized"
 {
   "error": "Unauthorized"
 }
-bob@dylan:~$
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/unauthorized" -vvv
+~$
+~$ curl "http://0.0.0.0:5000/api/v1/unauthorized" -vvv
 *   Trying 0.0.0.0...
 * TCP_NODELAY set
 * Connected to 0.0.0.0 (127.0.0.1) port 5000 (#0)
@@ -94,24 +94,24 @@ bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/unauthorized" -vvv
   "error": "Unauthorized"
 }
 * Closing connection 0
-bob@dylan:~$
+~$
 ```
 
 ### 2. Error handler: Forbidden
 In the first terminal:
 ```
-bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 python3 -m api.v1.app
+~$ API_HOST=0.0.0.0 API_PORT=5000 python3 -m api.v1.app
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 ....
 ```
 In a second terminal:
 ```
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/forbidden"
+~$ curl "http://0.0.0.0:5000/api/v1/forbidden"
 {
   "error": "Forbidden"
 }
-bob@dylan:~$
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/forbidden" -vvv
+~$
+~$ curl "http://0.0.0.0:5000/api/v1/forbidden" -vvv
 *   Trying 0.0.0.0...
 * TCP_NODELAY set
 * Connected to 0.0.0.0 (127.0.0.1) port 5000 (#0)
@@ -131,7 +131,7 @@ bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/forbidden" -vvv
   "error": "Forbidden"
 }
 * Closing connection 0
-bob@dylan:~$
+~$
 ```
 ### 3. Auth class
 
@@ -139,12 +139,12 @@ File: [main_0.py](main_0.py) , [api/v1/auth/auth.py](api/v1/auth/auth.py)
 
 This class is the template for all authentication system you will implement.
 ```
-bob@dylan:~$ 
-bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_0.py
+~$ 
+~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_0.py
 False
 None
 None
-bob@dylan:~$
+~$
 ```
 ### 4. Define which routes don't need authentication
 
@@ -157,8 +157,8 @@ File: [main_1.py](main_0.py) , [api/v1/auth/auth.py](api/v1/auth/auth.py)
 -   You can assume  `excluded_paths`  contains string path always ending by a  `/`
 -   This method must be slash tolerant:  `path=/api/v1/status`  and  `path=/api/v1/status/`  must be returned  `False`  if  `excluded_paths`  contains  `/api/v1/status/`
 ```
-bob@dylan:~$
-bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_1.py
+~$
+~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_1.py
 True
 True
 True
@@ -166,7 +166,7 @@ False
 False
 True
 True
-bob@dylan:~$
+~$
 ```
 
 ### 5. Request validation!
@@ -180,63 +180,63 @@ method  `def authorization_header(self, request=None) -> str:`  in  `api/v1/auth
 
 In the first terminal:
 ```
-bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=auth python3 -m api.v1.app
+~$ API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=auth python3 -m api.v1.app
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 ....
 ```
 In a second terminal:
 ```
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/status"
+~$ curl "http://0.0.0.0:5000/api/v1/status"
 {
   "status": "OK"
 }
-bob@dylan:~$ 
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/status/"
+~$ 
+~$ curl "http://0.0.0.0:5000/api/v1/status/"
 {
   "status": "OK"
 }
-bob@dylan:~$ 
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/users"
+~$ 
+~$ curl "http://0.0.0.0:5000/api/v1/users"
 {
   "error": "Unauthorized"
 }
-bob@dylan:~$
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Test"
+~$
+~$ curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Test"
 {
   "error": "Forbidden"
 }
-bob@dylan:~$
+~$
 ```
 
 ### 6. Basic auth
 In the first terminal:
 ```
-bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=basic_auth python3 -m api.v1.app
+~$ API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=basic_auth python3 -m api.v1.app
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 ....
 ```
 In a second terminal:
 ```
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/status"
+~$ curl "http://0.0.0.0:5000/api/v1/status"
 {
   "status": "OK"
 }
-bob@dylan:~$
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/status/"
+~$
+~$ curl "http://0.0.0.0:5000/api/v1/status/"
 {
   "status": "OK"
 }
-bob@dylan:~$
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/users"
+~$
+~$ curl "http://0.0.0.0:5000/api/v1/users"
 {
   "error": "Unauthorized"
 }
-bob@dylan:~$
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Test"
+~$
+~$ curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Test"
 {
   "error": "Forbidden"
 }
-bob@dylan:~$
+~$
 ```
 
 ### 7. Basic - Base64 part
@@ -250,8 +250,8 @@ extract_base64_authorization_header(self, authorization_header: str) -> str:`  i
 -   Otherwise, return the value after  `Basic`  (after the space)
 -   You can assume  `authorization_header`  contains only one  `Basic`
 ```
-bob@dylan:~$
-bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_2.py
+~$
+~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_2.py
 None
 None
 None
@@ -259,7 +259,7 @@ Holberton
 SG9sYmVydG9u
 SG9sYmVydG9uIFNjaG9vbA==
 None
-bob@dylan:~$
+~$
 ```
 
 ### 8. Basic - Base64 decode
@@ -274,15 +274,15 @@ bob@dylan:~$
 -   Otherwise, return the decoded value as UTF8 string - you can use  `decode('utf-8')`
 
 ```
-bob@dylan:~$
-bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_3.py
+~$
+~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_3.py
 None
 None
 None
 Holberton
 Holberton School
 Holberton School
-bob@dylan:~$
+~$
 ```
 
 ### 9. Basic - User credentials
@@ -297,14 +297,14 @@ bob@dylan:~$
 -   Otherwise, return the user email and the user password - these 2 values must be separated by a  `:`
 -   You can assume  `decoded_base64_authorization_header`  will contain only one  `:`
 ```
-bob@dylan:~$
-bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_4.py
+~$
+~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_4.py
 (None, None)
 (None, None)
 (None, None)
 ('Holberton', 'School')
 ('bob@gmail.com', 'toto1234')
-bob@dylan:~$
+~$
 ```
 
 ### 10. Basic - User object
@@ -319,15 +319,15 @@ bob@dylan:~$
 -   Otherwise, return the  `User`  instance
 
 ```
-bob@dylan:~$
-bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_5.py 
+~$
+~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_5.py 
 New user: Bob Dylan
 None
 None
 None
 None
 Bob Dylan
-bob@dylan:~$
+~$
 ```
 
 ### 11. Basic - Overload current_user - and BOOM!
@@ -343,38 +343,38 @@ bob@dylan:~$
 
 In the first terminal:
 ```
-bob@dylan:~$
-bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_6.py 
+~$
+~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_6.py 
 New user: 9375973a-68c7-46aa-b135-29f79e837495 / bob@hbtn.io
 Basic Base64: Ym9iQGhidG4uaW86SDBsYmVydG9uU2Nob29sOTgh
-bob@dylan:~$
-bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=basic_auth python3 -m api.v1.app
+~$
+~$ API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=basic_auth python3 -m api.v1.app
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 ....
 ```
 In a second terminal:
 ```
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/status"
+~$ curl "http://0.0.0.0:5000/api/v1/status"
 {
   "status": "OK"
 }
-bob@dylan:~$ 
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/users"
+~$ 
+~$ curl "http://0.0.0.0:5000/api/v1/users"
 {
   "error": "Unauthorized"
 }
-bob@dylan:~$ 
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Test"
+~$ 
+~$ curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Test"
 {
   "error": "Forbidden"
 }
-bob@dylan:~$ 
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Basic test"
+~$ 
+~$ curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Basic test"
 {
   "error": "Forbidden"
 }
-bob@dylan:~$
-bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Basic Ym9iQGhidG4uaW86SDBsYmVydG9uU2Nob29sOTgh"
+~$
+~$ curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Basic Ym9iQGhidG4uaW86SDBsYmVydG9uU2Nob29sOTgh"
 [
   {
     "created_at": "2017-09-25 01:55:17", 
@@ -385,5 +385,5 @@ bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Basic Ym
     "updated_at": "2017-09-25 01:55:17"
   }
 ]
-bob@dylan:~$ 
+~$ 
 ```

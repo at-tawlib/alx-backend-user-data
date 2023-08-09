@@ -37,8 +37,13 @@ class Auth:
         return True
 
     def authorization_header(self, request=None) -> str:
-        """description"""
-        return None
+        """validate requests to secure the API
+        gets and returns the Authorization from the header
+        """
+        if request is None:
+            return None
+        return request.headers.get("Authorization", None)
+
 
     def current_user(self, request=None) -> TypeVar('User'):
         """desc"""

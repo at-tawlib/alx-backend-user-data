@@ -34,7 +34,7 @@ def before_request():
             # if header is none = uanuthorized
             if auth.authorization_header(request) is None:
                 abort(401, "Unauthorized")
-            
+
             # if current_user is not found = forbidden
             if auth.current_user(request) is None:
                 abort(403, "Forbidden")

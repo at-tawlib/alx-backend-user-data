@@ -19,6 +19,7 @@ if AUTH_TYPE == "auth":
     from api.v1.auth.auth import Auth
     auth = Auth()
 
+
 @app.before_request
 def before_request():
     """executed before each request is handled"""
@@ -26,10 +27,12 @@ def before_request():
     if auth is None:
         pass
     else:
-        exclude_list = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+        exclude_list = ['/api/v1/status/', '/api/v1/unauthorized/',
+                        '/api/v1/forbidden/']
         if auth.require_auth(request.path, exclude_list):
             if auth.authorization_header(request) is None:
-                abort(401, "Unauturized")
+                abort(401, "Unauthorized")
+
 
 @app.errorhandler(404)
 def not_found(error) -> str:

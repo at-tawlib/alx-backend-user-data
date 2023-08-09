@@ -36,7 +36,7 @@ $
 - `POST /api/v1/users`: creates a new user (JSON parameters: `email`, `password`, `last_name` (optional) and `first_name` (optional))
 - `PUT /api/v1/users/:id`: updates an user based on the ID (JSON parameters: `last_name` and `first_name`)
 
-#### Use the API  _(in another tab or in your browser)_
+#### 0. Use the API  _(in another tab or in your browser)_
 ```
 $ curl "http://0.0.0.0:5000/api/v1/status" -vvv
 *   Trying 0.0.0.0...
@@ -135,8 +135,6 @@ In a second terminal:
 ```
 ### 3. Auth class
 
-File: [main_0.py](main_0.py) , [api/v1/auth/auth.py](api/v1/auth/auth.py)
-
 This class is the template for all authentication system you will implement.
 ```
 ~$ 
@@ -148,7 +146,6 @@ None
 ```
 ### 4. Define which routes don't need authentication
 
-File: [main_1.py](main_0.py) , [api/v1/auth/auth.py](api/v1/auth/auth.py)
  `def require_auth(self, path: str, excluded_paths: List[str]) -> bool:`  in  `Auth`  that returns  `True`  if the  `path`  is not in the list of strings  `excluded_paths`:
 
 -   Returns  `True`  if  `path`  is  `None`
@@ -170,8 +167,6 @@ True
 ```
 
 ### 5. Request validation!
-
-[api/v1/auth/auth.py](api/v1/auth/auth.py) , [api/v1/app.py](api/v1/app.py)
 
 method  `def authorization_header(self, request=None) -> str:`  in  `api/v1/auth/auth.py`:
 -   If  `request`  is  `None`, returns  `None`
@@ -241,9 +236,7 @@ In a second terminal:
 
 ### 7. Basic - Base64 part
 
-[api/v1/auth/basic_auth.py](api/v1/auth/basic_auth.py) , [main_2.py](main_2.py)
-
-extract_base64_authorization_header(self, authorization_header: str) -> str:`  in the class  `BasicAuth`  that returns the Base64 part of the  `Authorization`  header for a Basic Authentication:
+`extract_base64_authorization_header(self, authorization_header: str) -> str:`  in the class  `BasicAuth`  that returns the Base64 part of the  `Authorization`  header for a Basic Authentication:
 -   Return  `None`  if  `authorization_header`  is  `None`
 -   Return  `None`  if  `authorization_header`  is not a string
 -   Return  `None`  if  `authorization_header`  doesn’t start by  `Basic`  (with a space at the end)
@@ -263,8 +256,6 @@ None
 ```
 
 ### 8. Basic - Base64 decode
-
-[main_3.py](main_3.py)
 
 `def decode_base64_authorization_header(self, base64_authorization_header: str) -> str:`  in the class  `BasicAuth`  that returns the decoded value of a Base64 string  `base64_authorization_header`:
 
@@ -287,8 +278,6 @@ Holberton School
 
 ### 9. Basic - User credentials
 
-[main_4.py](main_4.py)
-
 `def extract_user_credentials(self, decoded_base64_authorization_header: str) -> (str, str)`  in the class  `BasicAuth`  that returns the user email and password from the Base64 decoded value.
 -   This method must return 2 values
 -   Return  `None, None`  if  `decoded_base64_authorization_header`  is  `None`
@@ -308,8 +297,6 @@ Holberton School
 ```
 
 ### 10. Basic - User object
-
-[main_5.py](main_5.py)
 
 `def user_object_from_credentials(self, user_email: str, user_pwd: str) -> TypeVar('User'):`  in the class  `BasicAuth`  that returns the  `User`  instance based on his email and password.
 -   Return  `None`  if  `user_email`  is  `None`  or not a string
@@ -332,7 +319,6 @@ Bob Dylan
 
 ### 11. Basic - Overload current_user - and BOOM!
 
-[main_6.py](main_6.py)
  `def current_user(self, request=None) -> TypeVar('User')`  in the class  `BasicAuth`  that overloads  `Auth`  and retrieves the  `User`  instance for a request:
 
 -   You must use  `authorization_header`

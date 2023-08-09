@@ -1,4 +1,4 @@
-# 0x01. Basic authentication
+# 0x01. Basic authentication
 
 ## Files
 ### `models/`
@@ -12,6 +12,7 @@
 - `views/index.py`: basic endpoints of the API: `/status` and `/stats`
 - `views/users.py`: all users endpoints
 - `auth/auth.py`:  used to manage api authentication
+- `auth/basic_auth.py` : basic authentication class
 
 
 ### Setup

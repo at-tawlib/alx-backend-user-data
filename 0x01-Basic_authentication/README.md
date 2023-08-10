@@ -373,3 +373,63 @@ In a second terminal:
 ]
 ~$ 
 ```
+
+
+### 12. Basic - Allow password with ":"
+ `def extract_user_credentials(self, decoded_base64_authorization_header)`  to allow password with  `:`.
+
+In the first terminal:
+```
+bob@dylan:~$ 
+bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_100.py 
+New user: 5891469b-d2d5-4d33-b05d-02617d665368
+Basic Base64: Ym9iMTAwQGhidG4uaW86SDBsYmVydG9uOlNjaG9vbDo5OCE=
+bob@dylan:~$
+bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=basic_auth python3 -m api.v1.app
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+....
+```
+In a second terminal:
+```
+bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/status"
+{
+  "status": "OK"
+}
+bob@dylan:~$
+bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/users"
+{
+  "error": "Unauthorized"
+}
+bob@dylan:~$ 
+bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Test"
+{
+  "error": "Forbidden"
+}
+bob@dylan:~$
+bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Basic test"
+{
+  "error": "Forbidden"
+}
+bob@dylan:~$
+bob@dylan:~$ curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Basic Ym9iMTAwQGhidG4uaW86SDBsYmVydG9uOlNjaG9vbDo5OCE="
+[
+  {
+    "created_at": "2017-09-25 01:55:17", 
+    "email": "bob@hbtn.io", 
+    "first_name": null, 
+    "id": "9375973a-68c7-46aa-b135-29f79e837495", 
+    "last_name": null, 
+    "updated_at": "2017-09-25 01:55:17"
+  },
+  {
+    "created_at": "2017-09-25 01:59:42", 
+    "email": "bob100@hbtn.io", 
+    "first_name": null, 
+    "id": "5891469b-d2d5-4d33-b05d-02617d665368", 
+    "last_name": null, 
+    "updated_at": "2017-09-25 01:59:42"
+  }
+]
+bob@dylan:~$
+```
+> Written with [StackEdit](https://stackedit.io/).

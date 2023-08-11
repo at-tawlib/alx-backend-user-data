@@ -36,10 +36,11 @@ def before_request():
     else:
         setattr(request, "current_user", auth.current_user(request))
         exclude_list = ['/api/v1/status/', '/api/v1/unauthorized/',
-                        '/api/v1/forbidden/']
+                        '/api/v1/forbidden/', '/api/v1/auth_session/login/']
         if auth.require_auth(request.path, exclude_list):
+            cookie = auth.session_cookie(request)
             # if header is none = uanuthorized
-            if auth.authorization_header(request) is None:
+            if auth.authorization_header(request) is None and cookie is None:
                 abort(401, "Unauthorized")
 
             # if current_user is not found = forbidden

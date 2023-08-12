@@ -4,7 +4,7 @@ Routes for session
 """
 import os
 from api.v1.views import app_views
-from flask import request, jsonify
+from flask import abort, request, jsonify
 from models.user import User
 
 
@@ -37,3 +37,14 @@ def login():
             res.set_cookie(session_name, session_id)
             return res
     return jsonify({"error": "wrong password"}), 401
+
+
+@app_views.route("/auth_session/logout",
+                 methods=["DELETE"], strict_slashes=False)
+def logout():
+    """delete the session id that contains a request as a cookie
+    and logs out"""
+    from api.v1.app import auth
+    if auth.destroy_session(request):
+        return jsonify({}), 200
+    abort(404)

@@ -4,7 +4,7 @@ Routes for session
 """
 import os
 from api.v1.views import app_views
-from flask import abort, request, jsonify
+from flask import request, jsonify
 from models.user import User
 
 

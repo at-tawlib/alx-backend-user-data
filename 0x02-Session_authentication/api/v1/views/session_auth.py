@@ -14,19 +14,19 @@ def login():
     Gets user email and password, checks if it is valid,
     creates a session and set a cookie for it then returns the user object
     """
-    email = request.form.get("email");
-    password = request.form.get("password");
+    email = request.form.get("email")
+    password = request.form.get("password")
 
     if email is None or email == "":
         return jsonify({"error": "email missing"}), 400
-    
+
     if password is None or password == "":
         return jsonify({"error": "password missing"}), 400
-    
+
     users = User.search({"email": email})
-    if not users or users == [] :
-        return jsonify({ "error": "no user found for this email" }), 404
-    
+    if not users or users == []:
+        return jsonify({"error": "no user found for this email"}), 404
+
     for user in users:
         if user.is_valid_password(password):
             from api.v1.app import auth

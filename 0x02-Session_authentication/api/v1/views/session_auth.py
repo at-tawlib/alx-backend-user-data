@@ -28,7 +28,7 @@ def login():
         return jsonify({ "error": "no user found for this email" }), 404
     
     for user in users:
-        if user.valid_password(password):
+        if user.is_valid_password(password):
             from api.v1.app import auth
             # create a session session ID
             session_id = auth.create_session(user.id)

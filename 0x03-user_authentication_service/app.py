@@ -44,7 +44,7 @@ def login() -> str:
         abort(401)
 
 
-@app.route("/sessions", methods=["DELETE"], strict_slashes=False)
+@app.route("/sessions", methods=["DELETE"])
 def logout() -> str:
     """
     find user with the session_id, if user exists,

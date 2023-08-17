@@ -22,7 +22,7 @@ def _hash_password(password: str) -> str:
     return hash
 
 
-def _generate_uuid(self) -> str:
+def _generate_uuid() -> str:
     """generate uuid and returns it's string representation"""
     return str(uuid4())
 
@@ -56,3 +56,13 @@ class Auth:
             return False
         except NoResultFound:
             return False
+
+    def create_session(self, email: str) -> str:
+        """takes in an email string and returns the session ID"""
+        try:
+            user = self._db.find_user_by(email=email)
+            user.session_id = _generate_uuid()
+            self._db.update_user(user_id=user.id, session_id=user.session_id)
+            return user.session_id
+        except NoResultFound:
+            return None

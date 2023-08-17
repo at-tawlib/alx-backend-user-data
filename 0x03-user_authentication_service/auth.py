@@ -79,9 +79,6 @@ class Auth:
         """Updates the corresponding user_session id to None"""
         try:
             user = self._db.find_user_by(id=user_id)
+            self._db.update_user(user_id=user.id, session_id=None)
         except NoResultFound:
-            return None
-        else:
-            # self._db.update_user(user_id=user_id, session_id=None)
-            user.session_id = None
-            return None
+            pass

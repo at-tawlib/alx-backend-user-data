@@ -2,8 +2,7 @@
 """
 Basic Flask App
 """
-from flask import Flask, request, make_response, abort
-from flask import jsonify
+from flask import Flask, jsonify, request, abort
 from auth import Auth
 
 

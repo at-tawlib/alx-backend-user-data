@@ -59,8 +59,8 @@ def logout() -> str:
     return redirect("/")
 
 
-@app.route("/profile", methods=["GET"])
-def profile():
+@app.route("/profile", methods=["GET"], strict_slashes=False)
+def profile() -> str:
     """
     find user by session_id
     """

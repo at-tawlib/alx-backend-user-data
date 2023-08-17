@@ -32,17 +32,19 @@ def users() -> str:
 
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
 def login() -> str:
-    """Check if login info is correct and create a user session"""
+    """
+    Check if login info is correct and create a user session
+    """
     email = request.form["email"]
     password = request.form["password"]
     if AUTH.valid_login(email, password):
         session_id = AUTH.create_session(email)
         res = jsonify({"email": email, "mesage": "logged in"})
         res.set_cookie("session_id", session_id)
-        return res
     else:
         abort(401)
 
+    return res
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")

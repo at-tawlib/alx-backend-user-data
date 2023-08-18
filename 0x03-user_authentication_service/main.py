@@ -90,9 +90,8 @@ def reset_password_token(email: str) -> str:
     return res.json().get('reset_token')
 
 
-
 def update_password(email: str, reset_token: str, new_password: str) -> None:
-    pass
+    """test for update password"""
     endpoint = "http://0.0.0.0:5000/reset_password"
     body = {
         'email': email,
@@ -104,9 +103,7 @@ def update_password(email: str, reset_token: str, new_password: str) -> None:
     assert res.json() == {"email": email, "message": "Password updated"}
 
 
-
 if __name__ == "__main__":
-
     register_user(EMAIL, PASSWD)
     log_in_wrong_password(EMAIL, NEW_PASSWD)
     profile_unlogged()
